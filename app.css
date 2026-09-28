@@ -484,381 +484,463 @@ select:focus{
 }
 
 /*==========================================================
-運動画面
+運動画面（参考デザインベース）
 ==========================================================*/
 
-.trainingScreen{
-
-    background:#000;
-
-    overflow:hidden;
-
+.trainingScreen {
+    background: #02070d;
+    overflow: hidden;
+    position: relative;
 }
 
-#video{
-
-    display:none;
-
+#video {
+    display: none;
 }
 
-#canvas{
-
-    position:absolute;
-
-    top:0;
-
-    left:0;
-
-    width:100%;
-
-    height:100%;
-
+#canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
 }
 
-/*==========================================================
-安全メッセージ
-==========================================================*/
-
-.safetyMessage{
-
-    position:absolute;
-
-    top:20px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    background: rgba(255, 209, 102, 0.9);
-    color:#111827;
-    padding:12px 20px;
-    border-radius:999px;
-    font-weight:800;
-    font-size:1rem;
-    z-index:100;
-    box-shadow:0 8px 22px rgba(255, 209, 102, 0.22);
-
+.exerciseMascot {
+    position: absolute;
+    left: 50%;
+    top: 58%;
+    transform: translate(-50%, -50%);
+    width: clamp(270px, 33vw, 520px);
+    height: clamp(270px, 33vw, 520px);
+    z-index: 3;
+    pointer-events: none;
 }
 
-/* ==========================================================
-   トレーニング遷移オーバーレイ（黒画面 + 大きな運動名）
-   ========================================================== */
-.transitionOverlay{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    /* 半透明の黒：体がうっすら見える程度 */
-    background: rgba(0,0,0,0.65);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:1000;
+.exerciseMascot .head {
+    position: absolute;
+    inset: 0 24% 18% 24%;
+    border-radius: 46% 46% 42% 42% / 58% 58% 40% 40%;
+    background: linear-gradient(180deg, rgba(245,247,250,0.96) 0%, rgba(207,214,220,0.96) 100%);
+    box-shadow: inset 0 -22px 24px rgba(0,0,0,0.08), 0 20px 50px rgba(0,0,0,0.26);
 }
-.transitionOverlay.hidden{ display:none !important; }
-.nextExerciseName{
-    color:#ffffff;
+
+.exerciseMascot .head::before,
+.exerciseMascot .head::after {
+    content: "";
+    position: absolute;
+    top: 16%;
+    width: 12%;
+    height: 12%;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.8);
+}
+
+.exerciseMascot .head::before { left: 14%; }
+.exerciseMascot .head::after { right: 14%; }
+
+.exerciseMascot .face {
+    position: absolute;
+    inset: 18% 18% 20% 18%;
+    border-radius: 36% 36% 42% 42%;
+}
+
+.exerciseMascot .eye {
+    position: absolute;
+    top: 34%;
+    width: 18%;
+    height: 11%;
+    border-radius: 999px;
+    background: #1d2430;
+}
+
+.exerciseMascot .eye.left { left: 28%; }
+.exerciseMascot .eye.right { right: 28%; }
+
+.exerciseMascot .smile {
+    position: absolute;
+    left: 50%;
+    bottom: 19%;
+    width: 30%;
+    height: 18%;
+    transform: translateX(-50%);
+    border-bottom: 10px solid #1d2430;
+    border-radius: 0 0 999px 999px;
+}
+
+.exerciseMascot .body {
+    position: absolute;
+    left: 29%;
+    bottom: 2%;
+    width: 42%;
+    height: 18%;
+    border-radius: 50px;
+    background: linear-gradient(180deg, rgba(249,251,253,0.96), rgba(217,223,230,0.96));
+    box-shadow: inset 0 -12px 18px rgba(0,0,0,0.07);
+}
+
+.exerciseMascot .body::before,
+.exerciseMascot .body::after {
+    content: "";
+    position: absolute;
+    bottom: -18%;
+    width: 18%;
+    height: 18%;
+    border-radius: 50%;
+    background: linear-gradient(180deg, rgba(245,248,250,0.96), rgba(208,214,218,0.96));
+}
+
+.exerciseMascot .body::before { left: 18%; }
+.exerciseMascot .body::after { right: 18%; }
+
+.safetyMessage {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 209, 102, 0.95);
+    color: #111827;
+    padding: 12px 18px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 1rem;
+    z-index: 100;
+    box-shadow: 0 8px 22px rgba(255, 209, 102, 0.22);
+}
+
+.transitionOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.transitionOverlay.hidden { display: none !important; }
+
+.nextExerciseName {
+    color: #ffffff;
     font-size: clamp(3.5rem, 9vw, 9rem);
-    font-weight:900;
-    text-align:center;
-    padding:20px;
+    font-weight: 900;
+    text-align: center;
+    padding: 20px;
     text-shadow: 0 4px 16px rgba(0,0,0,0.6);
-    line-height:1;
+    line-height: 1;
     font-family: "Saira", "Noto Sans JP", sans-serif;
-    letter-spacing:0.04em;
+    letter-spacing: 0.04em;
 }
 
-/*==========================================================
-警告表示
-==========================================================*/
-
-.warning{
-
-    position:absolute;
-
-    top:70px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    background:#f44336;
-
-    color:white;
-
-    padding:10px 18px;
-
-    border-radius:12px;
-
-    font-size:1rem;
-
-    font-weight:bold;
-
-    display:none;
-
-    z-index:100;
-
+.warning {
+    position: absolute;
+    top: 76px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #f44336;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    display: none;
+    z-index: 100;
 }
 
-/*==========================================================
-現在の運動
-==========================================================*/
-
-#exercisePanel{
-
-    position:absolute;
-
-    top:20px;
-
-    left:20px;
-
-    width:290px;
-
-    background:rgba(16,27,35,0.82);
-    border:1px solid rgba(134,171,194,0.2);
-    border-radius:20px;
-
-    padding:22px 20px;
-
-    box-shadow:0 12px 32px rgba(0,0,0,.28);
+#exercisePanel {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    width: min(420px, 38vw);
+    background: rgba(17, 28, 35, 0.78);
+    border: 1px solid rgba(138,176,207,0.2);
+    border-radius: 18px;
+    padding: 18px 20px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.28);
     backdrop-filter: blur(8px);
-
+    z-index: 6;
 }
 
-.exerciseTitle{
-
-    font-size:1rem;
-
-    color:var(--text-soft);
-
-    margin-bottom:10px;
-
+.exerciseTitle {
+    font-size: 1rem;
+    color: #dfeeff;
+    margin-bottom: 10px;
 }
 
-#exerciseName{
-
-    font-size:clamp(2rem, 2.6vw, 3.2rem);
-    font-weight:800;
-    color:#f4f9ff;
-    margin-bottom:12px;
-    letter-spacing:0.04em;
+#exerciseName {
+    font-size: clamp(2.2rem, 2.8vw, 3.8rem);
+    font-weight: 900;
+    color: #f6fbff;
+    margin-bottom: 12px;
+    letter-spacing: 0.04em;
     font-family: "Saira", "Noto Sans JP", sans-serif;
-
+    line-height: 1.1;
 }
 
-#exerciseTarget{
-
-    font-size:clamp(1.3rem, 1.9vw, 2.2rem);
-    font-weight:800;
-    color:#ffd166;
-    line-height:1.35;
-    text-shadow: 0 6px 18px rgba(255, 209, 102, 0.2);
-
+#exerciseTarget {
+    font-size: clamp(1.3rem, 1.8vw, 2.3rem);
+    font-weight: 800;
+    color: #ffd166;
+    line-height: 1.35;
+    text-shadow: 0 6px 18px rgba(255,209,102,0.2);
+    white-space: normal;
 }
 
-/*==========================================================
-運動進行状況
-==========================================================*/
-
-#trainingProgress{
-
-    position:absolute;
-
-    top:20px;
-
-    right:20px;
-
-    width:240px;
-
-    background:rgba(16,27,35,0.82);
-    border:1px solid rgba(134,171,194,0.2);
-    border-radius:20px;
-
-    padding:20px;
-
-    text-align:center;
-
-    box-shadow:0 12px 32px rgba(0,0,0,.28);
-
+#exerciseGoal {
+    position: absolute;
+    top: 116px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(720px, 62vw);
+    padding: 12px 18px;
+    border-radius: 18px;
+    background: rgba(17, 28, 35, 0.92);
+    border: 1px solid rgba(138,176,207,0.2);
+    color: #eaf6ff;
+    font-size: clamp(1.1rem, 1.7vw, 2rem);
+    font-weight: 700;
+    line-height: 1.35;
+    text-align: center;
+    z-index: 100;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.18);
 }
 
-.progressTitle{
-
-    color:var(--text-soft);
-
-    margin-bottom:10px;
-
+#exerciseGoal.isCleared {
+    border-color: rgba(116, 240, 178, 0.7);
+    background: rgba(17, 38, 31, 0.85);
+    color: #b8f9d1;
 }
 
-#progressText{
+#trainingProgress {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: min(290px, 24vw);
+    background: rgba(17, 28, 35, 0.78);
+    border: 1px solid rgba(138,176,207,0.2);
+    border-radius: 18px;
+    padding: 18px 20px;
+    text-align: center;
+    box-shadow: 0 12px 32px rgba(0,0,0,.28);
+    z-index: 6;
+}
 
-    font-size:1.8rem;
-    color:var(--primary);
-    font-weight:800;
+.progressTitle {
+    color: #dfeeff;
+    margin-bottom: 10px;
+}
+
+#progressText {
+    font-size: clamp(1.5rem, 2vw, 2.2rem);
+    color: var(--primary);
+    font-weight: 800;
     font-family: "Saira", "Noto Sans JP", sans-serif;
-
-}
-/*==========================================================
-ステータスパネル
-==========================================================*/
-
-.statsPanel{
-
-    position:absolute;
-
-    bottom:20px;
-
-    left:20px;
-
-    display:flex;
-
-    gap:15px;
-
-    z-index:100;
-
 }
 
-.statCard{
-
-    width:120px;
-
-    background:rgba(255,255,255,.92);
-
-    border-radius:18px;
-
-    padding:15px;
-
-    text-align:center;
-
-    box-shadow:0 6px 18px rgba(0,0,0,.18);
-
+.statsPanel {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    gap: 15px;
+    z-index: 100;
 }
 
-.statCard .label{
-
-    font-size:0.95rem;
-
-    color:#666;
-
-    margin-bottom:10px;
-
+.statCard {
+    width: 120px;
+    background: rgba(16, 26, 35, 0.82);
+    border: 1px solid rgba(138,176,207,0.2);
+    border-radius: 18px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,.18);
 }
 
-.statCard .value{
-
-    font-size:2rem;
-
-    font-weight:bold;
-
-    color:#1565c0;
-
+.statCard .label {
+    font-size: 0.95rem;
+    color: #dfeeff;
+    margin-bottom: 10px;
 }
 
-/*==========================================================
-FPS表示
-==========================================================*/
-
-.fpsPanel{
-
-    position:absolute;
-
-    bottom:20px;
-
-    right:20px;
-
-    background:rgba(0,0,0,.75);
-
-    color:#00ff66;
-
-    padding:12px 18px;
-
-    border-radius:12px;
-
-    font-size:1rem;
-
-    font-weight:bold;
-
-    font-family:monospace;
-
-    z-index:100;
-
+.statCard .value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #5ad2ff;
 }
 
-/*==========================================================
-リセットボタン
-==========================================================*/
-
-.resetBtn{
-
-    position:absolute;
-
-    top:50%;
-
-    right:20px;
-
-    transform:translateY(-50%);
-
-    background:#f44336;
-
-    color:#fff;
-
-    border:none;
-
-    border-radius:14px;
-
-    padding:14px 20px;
-
-    cursor:pointer;
-
-    font-size:1rem;
-
-    transition:.25s;
-
-    z-index:100;
-
+.fpsPanel {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0,0,0,.75);
+    color: #00ff66;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: monospace;
+    z-index: 100;
 }
 
-.resetBtn:hover{
-
-    background:#d32f2f;
-
-    transform:translateY(-50%) scale(1.05);
-
+.resetBtn {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    background: #f44336;
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 14px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: .25s;
+    z-index: 100;
 }
 
-.resetBtn:active{
-
-    transform:translateY(-50%) scale(.96);
-
+.resetBtn:hover {
+    background: #d32f2f;
+    transform: translateY(-50%) scale(1.05);
 }
 
-/* 終了ボタン（最初に戻るボタンと同サイズで下に並べる） */
-.endBtn{
-    position:absolute;
-    top:calc(50% + 70px);
-    right:20px;
-    background:#9e9e9e; /* グレーにして secondary 感を出す */
-    color:#fff;
-    z-index:100;
+.resetBtn:active {
+    transform: translateY(-50%) scale(.96);
 }
 
-/* EXCELLENT バッジ（腹部に短時間表示） */
-.excellentBadge{
-    position:absolute;
-    left:50%;
-    top:55%;
-    transform:translate(-50%,-50%);
-    background:rgba(20,120,40,0.9);
-    color:#fff;
-    padding:12px 20px;
-    border-radius:10px;
-    font-weight:bold;
-    font-size:1.8rem;
-    letter-spacing:.08em;
-    z-index:250;
-    pointer-events:none;
-    text-shadow:0 2px 8px rgba(0,0,0,0.35);
+.endBtn {
+    position: absolute;
+    top: calc(50% + 70px);
+    right: 20px;
+    background: #9e9e9e;
+    color: #fff;
+    z-index: 100;
+}
+
+.excellentBadge {
+    position: absolute;
+    left: 50%;
+    top: 55%;
+    transform: translate(-50%,-50%);
+    background: rgba(20,120,40,0.9);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.8rem;
+    letter-spacing: .08em;
+    z-index: 250;
+    pointer-events: none;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+}
+
+@media (max-width: 900px) {
+    #exercisePanel {
+        width: min(340px, calc(100% - 32px));
+        top: 16px;
+        left: 16px;
+    }
+
+    #trainingProgress {
+        width: min(240px, 30vw);
+        top: 16px;
+        right: 16px;
+    }
+
+    #exerciseGoal {
+        width: min(560px, calc(100% - 32px));
+        top: 112px;
+    }
+
+    .exerciseMascot {
+        top: 62%;
+        width: clamp(220px, 40vw, 420px);
+        height: clamp(220px, 40vw, 420px);
+    }
+}
+
+@media (max-width: 640px) {
+    .safetyMessage {
+        top: 12px;
+        width: calc(100% - 24px);
+        text-align: center;
+        font-size: 0.82rem;
+        padding: 10px 12px;
+    }
+
+    #exercisePanel {
+        width: calc(100% - 24px);
+        left: 12px;
+        right: 12px;
+        top: 16px;
+        padding: 12px 14px;
+    }
+
+    #exerciseName {
+        font-size: clamp(1.8rem, 7vw, 2.6rem);
+    }
+
+    #exerciseTarget {
+        font-size: clamp(1.1rem, 3.8vw, 1.6rem);
+    }
+
+    #exerciseGoal {
+        top: 110px;
+        width: calc(100% - 24px);
+        font-size: 1rem;
+        padding: 10px 12px;
+    }
+
+    #trainingProgress {
+        width: calc(100% - 24px);
+        left: 12px;
+        right: 12px;
+        top: 150px;
+    }
+
+    .statsPanel {
+        left: 12px;
+        right: 12px;
+        width: calc(100% - 24px);
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .statCard {
+        flex: 1;
+        min-width: 88px;
+        padding: 10px 6px;
+    }
+
+    .statCard .label {
+        font-size: 0.78rem;
+    }
+
+    .statCard .value {
+        font-size: 1.5rem;
+    }
+
+    .fpsPanel {
+        bottom: 14px;
+        right: 14px;
+        font-size: 0.9rem;
+    }
+
+    .resetBtn {
+        bottom: 14px;
+        top: auto;
+        right: 14px;
+        transform: none;
+    }
+
+    .endBtn {
+        top: auto;
+        bottom: 14px;
+        right: 120px;
+    }
+
+    .exerciseMascot {
+        top: 66%;
+        width: clamp(180px, 52vw, 260px);
+        height: clamp(180px, 52vw, 260px);
+    }
 }
 
 /*==========================================================
@@ -1331,9 +1413,9 @@ body{
 End
 ==========================================================*/
 
-/* 運動画面: 読みやすさと表示見本 */
+/* 運動画面のレイアウトを参考デザインに合わせる */
 #exercisePanel{
-    width:clamp(300px,25vw,390px);
+    width:min(460px, 42vw);
     padding:18px 22px;
 }
 
@@ -1347,167 +1429,43 @@ End
     text-overflow:ellipsis;
 }
 
-.exerciseTitle,
-.progressTitle{
-    font-size:clamp(1rem,1.25vw,1.2rem);
-}
-
 #exerciseName{
-    font-size:clamp(2rem,3vw,3.2rem);
+    font-size:clamp(2.1rem, 2.8vw, 3.4rem);
     line-height:1.15;
     letter-spacing:.03em;
     margin-bottom:8px;
 }
 
 #exerciseTarget{
-    font-size:clamp(1.2rem,1.7vw,1.65rem);
-    font-weight:bold;
+    font-size:clamp(1.4rem, 1.8vw, 2.1rem);
+    font-weight:800;
+    white-space:normal;
 }
 
 #trainingProgress{
-    width:clamp(260px,22vw,340px);
+    width:min(280px, 24vw);
     padding:18px;
 }
 
 #progressText{
-    font-size:clamp(1.5rem,2.1vw,2.25rem);
-}
-
-@media (max-width:700px){
-    #exercisePanel{
-        top:12px;
-        left:12px;
-        width:calc(100% - 24px);
-        padding:12px 16px;
-    }
-
-    #trainingProgress{
-        top:115px;
-        left:12px;
-        right:auto;
-        width:calc(100% - 24px);
-        padding:10px 16px;
-        display:flex;
-        align-items:center;
-        justify-content:space-between;
-        text-align:left;
-    }
-
-    .progressTitle{ margin:0; }
-    .statsPanel{ bottom:12px; left:12px; gap:8px; width:calc(100% - 24px); }
-    .statCard{ min-width:0; padding:10px 6px; }
-    .statCard .label{ white-space:nowrap; font-size:.78rem; }
-    .resetBtn{ right:12px; }
-}
-
-/* ユニバーサルデザイン: 文字を大きく、十分なコントラストと操作の見やすさを確保 */
-#exercisePanel{
-    width:clamp(400px,36vw,540px);
-    background:rgba(255,255,255,.97);
-    border:3px solid #0b5cad;
-}
-
-#exerciseName{
-    font-size:clamp(1.7rem,2.7vw,3.2rem);
-    color:#073d73;
-    overflow:visible;
-    text-overflow:clip;
-}
-
-#exerciseTarget{
-    color:#202020;
-}
-
-/* グーパー運動の指示は、カメラ映像の上でも一目で読める大きさにする */
-#exerciseTarget{
-    white-space:normal;
-    overflow:visible;
-    text-overflow:clip;
-    font-size:clamp(1.45rem,2.35vw,2.35rem);
-    font-weight:800;
-    color:#a80000;
-    line-height:1.35;
-}
-
-#exerciseTarget.openHand{
-    color:#0059a8;
-}
-
-#trainingProgress,
-.statCard{
-    background:rgba(255,255,255,.97);
-    border:2px solid #4c84b8;
-}
-
-.exerciseTitle,
-.progressTitle,
-.statCard .label{
-    color:#303030;
-    font-weight:bold;
-}
-
-.memoryDigits{
-    white-space:pre;
-    word-break:normal;
-    overflow-wrap:normal;
-    font-size:clamp(1.7rem,4.4vw,3rem);
-    line-height:1.55;
-    letter-spacing:.12em;
-    color:#052f5c;
-    border:3px solid #1565c0;
-}
-
-button:focus-visible,
-input:focus-visible,
-select:focus-visible{
-    outline:4px solid #ff8c00;
-    outline-offset:3px;
-}
-
-@media (max-width:700px){
-    #exerciseName{
-        font-size:clamp(1.35rem,6.2vw,1.9rem);
-        letter-spacing:0;
-    }
-
-    #exercisePanel{
-        width:calc(100% - 24px);
-        border-width:2px;
-    }
-
-    .memoryDigits{
-        font-size:clamp(1.25rem,6.2vw,1.75rem);
-        letter-spacing:.07em;
-        padding:18px 8px;
-    }
-}
-
-@media (prefers-reduced-motion:reduce){
-    *,
-    *::before,
-    *::after{
-        animation-duration:.01ms !important;
-        animation-iteration-count:1 !important;
-        scroll-behavior:auto !important;
-        transition-duration:.01ms !important;
-    }
+    font-size:clamp(1.5rem, 2vw, 2.2rem);
 }
 
 .exerciseGoal{
     position:absolute;
-    top:185px;
-    left:20px;
-    width:clamp(400px,36vw,540px);
+    top:110px;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(760px, 62vw);
     padding:12px 18px;
-    border:1px solid rgba(122, 177, 214, 0.24);
-    border-radius:16px;
-    background: rgba(10, 18, 26, 0.74);
-    backdrop-filter: blur(7px);
+    border-radius:18px;
+    background: rgba(17, 28, 35, 0.92);
+    border:1px solid rgba(138,176,207,0.2);
     color:#eaf6ff;
-    font-size:clamp(1.15rem,1.6vw,1.5rem);
+    font-size:clamp(1.1rem, 1.7vw, 2rem);
     font-weight:700;
     line-height:1.35;
-    white-space:nowrap;
+    text-align:center;
     z-index:100;
     box-shadow: 0 10px 25px rgba(0,0,0,0.18);
 }
